@@ -27,11 +27,10 @@ Use `evm run` or the provided helper script:
 # TBD
 
 Not yet implemented:
-- CALLDATASIIZE
+- CALLDATASIZE
 - CALLDATACOPY
 - CODESIZE
 - KECCAK256
-- JUMP, JUMPI - IMPORTANT I KNOW... will fix asap
 - SELFDESTRUCT - currently implemented as STOP... (probably should not be implemented at all)
 - CREATE, CREATE2
 

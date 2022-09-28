@@ -18,8 +18,7 @@ start:
   0x00 mload
 
   // load bytecode[pc2] by (msg.data[pc2:pc2+32] >> 248)
-  calldataload
-  0xf8 shr
+  calldataload 0xf8 shr
 
   // stub is at (pc * 6) + stub_offset
   0x06 mul
@@ -309,10 +308,12 @@ op_55:
   sstore advance_loop jump
 
 op_56:
-  invalid advance_loop jump
+  impl_jump jump
+  invalid
 
 op_57:
-  invalid advance_loop jump
+  impl_jumpi jump
+  invalid
 
 op_58:
   pc advance_loop jump
@@ -884,6 +885,28 @@ impl_mstore8:
   advance_loop jump
 
 
+impl_jump:
+  // check if target is jumpdest (0x5b)
+  dup1
+  calldataload 0xf8 shr
+  0x5b sub
+  impl_bad_jump jumpi
+  0x00 mstore
+  start jump // skip advancing pc again
+
+
+impl_jumpi:
+  // top of stack is the condition
+  // so push impl_jump and conditionally go there
+  impl_jump jumpi
+  // otherwise advance normally
+  advance_loop jump
+
+
+impl_bad_jump:
+  invalid
+
+
 impl_msize:
   // top stack has offset; skip first word (reserved)
   0x20 msize sub
@@ -905,8 +928,7 @@ impl_push:
   // [pc2 | 0x5f | pc2]
 
   // (msg.data[pc2] - 0x5f) << 8 to get number of bytes
-  calldataload
-  0xf8 shr
+  calldataload 0xf8 shr
   sub
   // [pc2 | size bytes]
 
