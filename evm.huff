@@ -24,59 +24,47 @@ start:
   0x06 mul
   
   // add jump-table start offset aka stub_offset
-  stub_start_offset add
+  op_00 add
 
   // jump to opcode implementation
   jump
-  
-stub_start_offset:
-// op_00: // stub_start_offset already defines a jumpdest
+
+op_00:
   stop
   invalid invalid invalid invalid
 
 op_01:
-  add advance_loop jump
+  add next jump
 
 op_02:
-  mul advance_loop jump
+  mul next jump
 
 op_03:
-  sub advance_loop jump
-
-
-
-
-
-
-
-
-
-
+  sub next jump
 
 op_04:
-  div advance_loop jump
-
+  div next jump
 
 op_05:
-  sdiv advance_loop jump
+  sdiv next jump
 
 op_06:
-  mod advance_loop jump
+  mod next jump
 
 op_07:
-  smod advance_loop jump
+  smod next jump
 
 op_08:
-  addmod advance_loop jump
+  addmod next jump
 
 op_09:
-  mulmod advance_loop jump
+  mulmod next jump
 
 op_0a:
-  exp advance_loop jump
+  exp next jump
 
 op_0b:
-  signextend advance_loop jump
+  signextend next jump
 
 op_0c:
   invalid invalid invalid invalid invalid
@@ -91,46 +79,46 @@ op_0f:
   invalid invalid invalid invalid invalid
 
 op_10:
-  lt advance_loop jump
+  lt next jump
 
 op_11:
-  gt advance_loop jump
+  gt next jump
 
 op_12:
-  slt advance_loop jump
+  slt next jump
 
 op_13:
-  sgt advance_loop jump
+  sgt next jump
 
 op_14:
-  eq advance_loop jump
+  eq next jump
 
 op_15:
-  iszero advance_loop jump
+  iszero next jump
 
 op_16:
-  and advance_loop jump
+  and next jump
 
 op_17:
-  or advance_loop jump
+  or next jump
 
 op_18:
-  xor advance_loop jump
+  xor next jump
 
 op_19:
-  not advance_loop jump
+  not next jump
 
 op_1a:
-  byte advance_loop jump
+  byte next jump
 
 op_1b:
-  shl advance_loop jump
+  shl next jump
 
 op_1c:
-  shr advance_loop jump
+  shr next jump
 
 op_1d:
-  sar advance_loop jump
+  sar next jump
 
 op_1e:
   invalid invalid invalid invalid invalid
@@ -139,9 +127,8 @@ op_1f:
   invalid invalid invalid invalid invalid
 
 op_20:
+  impl_sha3 jump
   invalid
-  // keccak256
-  advance_loop jump
 
 op_21:
   invalid invalid invalid invalid invalid
@@ -189,81 +176,81 @@ op_2f:
   invalid invalid invalid invalid invalid
 
 op_30:
-  address advance_loop jump
+  address next jump
 
 op_31:
-  balance advance_loop jump
+  balance next jump
 
 op_32:
-  origin advance_loop jump
+  origin next jump
 
 op_33:
-  caller advance_loop jump
+  caller next jump
 
 op_34:
-  callvalue advance_loop jump
+  callvalue next jump
 
 op_35:
   // (requires an additional param for calldata which is annoying but essential)
-  calldataload advance_loop jump
+  calldataload next jump
 
 op_36:
-  calldatasize advance_loop jump
+  calldatasize next jump
 
 op_37:
   // TODO: restore implementation.. :( will need to init with different code, or use sload or something :\
-  calldatacopy advance_loop jump
+  calldatacopy next jump
 
 op_38:
-  calldatasize advance_loop jump
+  calldatasize next jump
 
 op_39:
-  calldatacopy advance_loop jump
+  calldatacopy next jump
 
 op_3a:
-  gasprice advance_loop jump
+  gasprice next jump
 
 op_3b:
-  extcodesize advance_loop jump
+  extcodesize next jump
 
 op_3c:
-  extcodecopy advance_loop jump
+  extcodecopy next jump
 
 op_3d:
-  returndatasize advance_loop jump
+  returndatasize next jump
 
 op_3e:
-  returndatacopy advance_loop jump
+  returndatacopy next jump
 
 op_3f:
-  extcodehash advance_loop jump
+  extcodehash next jump
 
 op_40:
-  blockhash advance_loop jump
+  blockhash next jump
 
 op_41:
-  coinbase advance_loop jump
+  coinbase next jump
 
 op_42:
-  timestamp advance_loop jump
+  timestamp next jump
 
 op_43:
-  number advance_loop jump
+  number next jump
 
 op_44:
-  difficulty advance_loop jump
+  difficulty next jump
 
 op_45:
-  gaslimit advance_loop jump
+  gaslimit next jump
 
 op_46:
-  chainid advance_loop jump
+  chainid next jump
 
 op_47:
-  selfbalance advance_loop jump
+  selfbalance next jump
 
 op_48:
-  basefee advance_loop jump
+  basefee next jump
 
 op_49:
   invalid invalid invalid invalid invalid
@@ -287,7 +274,7 @@ op_4f:
   invalid invalid invalid invalid invalid
 
 op_50:
-  pop advance_loop jump
+  pop next jump
 
 op_51:
   impl_mload jump
@@ -302,10 +289,10 @@ op_53:
   invalid
 
 op_54:
-  sload advance_loop jump
+  sload next jump
 
 op_55:
-  sstore advance_loop jump
+  sstore next jump
 
 op_56:
   impl_jump jump
@@ -316,17 +303,18 @@ op_57:
   invalid
 
 op_58:
-  pc advance_loop jump
+  impl_pc jump
+  invalid
 
 op_59:
   impl_msize jump
   invalid
 
 op_5a:
-  gas advance_loop jump
+  gas next jump
 
 op_5b:
-  advance_loop jump
+  next jump
   invalid // save gas instead of executing jumpdest twice
 
 op_5c:
@@ -470,115 +458,120 @@ op_7f:
   invalid
 
 op_80:
-  dup1 advance_loop jump
+  dup1 next jump
 
 op_81:
-  dup2 advance_loop jump
+  dup2 next jump
 
 op_82:
-  dup3 advance_loop jump
+  dup3 next jump
 
 op_83:
-  dup4 advance_loop jump
+  dup4 next jump
 
 op_84:
-  dup5 advance_loop jump
+  dup5 next jump
 
 op_85:
-  dup6 advance_loop jump
+  dup6 next jump
 
 op_86:
-  dup7 advance_loop jump
+  dup7 next jump
 
 op_87:
-  dup8 advance_loop jump
+  dup8 next jump
 
 op_88:
-  dup9 advance_loop jump
+  dup9 next jump
 
 op_89:
-  dup10 advance_loop jump
+  dup10 next jump
 
 op_8a:
-  dup11 advance_loop jump
+  dup11 next jump
 
 op_8b:
-  dup12 advance_loop jump
+  dup12 next jump
 
 op_8c:
-  dup13 advance_loop jump
+  dup13 next jump
 
 op_8d:
-  dup14 advance_loop jump
+  dup14 next jump
 
 op_8e:
-  dup15 advance_loop jump
+  dup15 next jump
 
 op_8f:
-  dup16 advance_loop jump
+  dup16 next jump
 
 op_90:
-  swap1 advance_loop jump
+  swap1 next jump
 
 op_91:
-  swap2 advance_loop jump
+  swap2 next jump
 
 op_92:
-  swap3 advance_loop jump
+  swap3 next jump
 
 op_93:
-  swap4 advance_loop jump
+  swap4 next jump
 
 op_94:
-  swap5 advance_loop jump
+  swap5 next jump
 
 op_95:
-  swap6 advance_loop jump
+  swap6 next jump
 
 op_96:
-  swap7 advance_loop jump
+  swap7 next jump
 
 op_97:
-  swap8 advance_loop jump
+  swap8 next jump
 
 op_98:
-  swap9 advance_loop jump
+  swap9 next jump
 
 op_99:
-  swap10 advance_loop jump
+  swap10 next jump
 
 op_9a:
-  swap11 advance_loop jump
+  swap11 next jump
 
 op_9b:
-  swap12 advance_loop jump
+  swap12 next jump
 
 op_9c:
-  swap13 advance_loop jump
+  swap13 next jump
 
 op_9d:
-  swap14 advance_loop jump
+  swap14 next jump
 
 op_9e:
-  swap15 advance_loop jump
+  swap15 next jump
 
 op_9f:
-  swap16 advance_loop jump
+  swap16 next jump
 
 op_a0:
-  log0 advance_loop jump
+  impl_log0 jump
+  invalid
 
 op_a1:
-  log1 advance_loop jump
+  impl_log1 jump
+  invalid
 
 op_a2:
-  log2 advance_loop jump
+  impl_log2 jump
+  invalid
 
 op_a3:
-  log3 advance_loop jump
+  impl_log3 jump
+  invalid
 
 op_a4:
-  log4 advance_loop jump
+  impl_log4 jump
+  invalid
 
 op_a5:
   invalid invalid invalid invalid invalid
@@ -806,32 +799,28 @@ op_ef:
   invalid invalid invalid invalid invalid
 
 op_f0:
+  impl_create jump
   invalid
-  // create
-  advance_loop jump
 
 op_f1:
-  call advance_loop jump
+  impl_call jump
+  invalid
 
 op_f2:
+  impl_callcode jump
   invalid
-  // callcode
-  advance_loop jump
 
 op_f3:
-  return
-  // advance_loop jump
-  invalid invalid invalid invalid
+  impl_return jump
+  invalid
 
 op_f4:
+  impl_delegatecall jump
   invalid
-  // delegatecall
-  advance_loop jump
 
 op_f5:
+  impl_create2 jump
   invalid
-  // create2
-  advance_loop jump
 
 op_f6:
   invalid invalid invalid invalid invalid
@@ -846,9 +835,8 @@ op_f9:
   invalid invalid invalid invalid invalid
 
 op_fa:
+  impl_staticcall jump
   invalid
-  // staticcall
-  advance_loop jump
 
 op_fb:
   invalid invalid invalid invalid invalid
@@ -857,32 +845,38 @@ op_fc:
   invalid invalid invalid invalid invalid
 
 op_fd:
-  revert advance_loop jump
+  impl_revert jump
+  invalid
 
 op_fe:
   invalid invalid invalid invalid invalid
 
 op_ff:
+  // selfdestruct, implemented as stop
   stop
   invalid invalid invalid invalid
 
 
+impl_sha3:
+  // +0x20 for offset (top of stack)
+  0x20 add sha3
+  next jump
 
 
 impl_mload:
   // top stack has offset; skip first word (reserved)
   0x20 add mload
-  advance_loop jump
+  next jump
 
 
 impl_mstore:
   0x20 add mstore
-  advance_loop jump
+  next jump
 
 
 impl_mstore8:
   0x20 add mstore8
-  advance_loop jump
+  next jump
 
 
 impl_jump:
@@ -900,17 +894,25 @@ impl_jumpi:
   // so push impl_jump and conditionally go there
   impl_jump jumpi
   // otherwise advance normally
-  advance_loop jump
+  next jump
 
 
 impl_bad_jump:
+  // trick to jump into an invalid jumpdest for nicer output
+  // (although might want to revert here or something)
+  pc jump
   invalid
+
+
+impl_pc:
+  0x00 mload
+  next jump
 
 
 impl_msize:
   // top stack has offset; skip first word (reserved)
   0x20 msize sub
-  advance_loop jump
+  next jump
 
 
 impl_push:
@@ -967,10 +969,94 @@ impl_push:
   // [push data bytesX | size bytes + pc2]
   0x00 mstore
   // [push data bits]
-  advance_loop jump
+  next jump
 
 
-advance_loop:
+impl_log0:
+  0x20 add log0
+  next jump
+
+
+impl_log1:
+  0x20 add log1
+  next jump
+
+
+impl_log2:
+  0x20 add log2
+  next jump
+
+
+impl_log3:
+  0x20 add log3
+  next jump
+
+
+impl_log4:
+  0x20 add log4
+  next jump
+
+
+  impl_call:
+  // adjust arg offset
+  swap4 0x20 add swap4
+  // adjust ret offset
+  swap6 0x20 add swap6
+  call
+  next jump
+
+
+impl_callcode:
+  // adjust arg offset
+  swap4 0x20 add swap4
+  // adjust ret offset
+  swap6 0x20 add swap6
+  callcode
+  next jump
+
+
+impl_delegatecall:
+  // adjust arg offset
+  swap3 0x20 add swap3
+  // adjust ret offset
+  swap5 0x20 add swap5
+  delegatecall
+  next jump
+
+
+impl_staticcall:
+  // adjust arg offset
+  swap4 0x20 add swap4
+  // adjust ret offset
+  swap6 0x20 add swap6
+  staticcall
+  next jump
+
+
+impl_create:
+  // adjust arg offset
+  swap1 0x20 add swap1
+  create
+  next jump
+
+  
+impl_create2:
+  // adjust arg offset
+  swap1 0x20 add swap1
+  create2
+  next jump
+
+
+
+impl_return:
+  0x20 add return
+
+
+impl_revert:
+  0x20 add revert
+
+
+next:
   // jump table exit - advance pc
   0x00 mload
   0x01 add
@@ -981,14 +1067,6 @@ advance_loop:
 
 
 end:
-  // push 0x20
-  // dup1
-  // msize
-  // sub
-  // swap1
-  // return
-
-
   0x20 msize sub
   0x20 return
 }
