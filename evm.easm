@@ -1,7 +1,7 @@
-;; init memory
-push 0
-msize
-mstore
+;; init memory (pc2 at first word)
+  push 0
+  msize
+  mstore
 
 ;; start loop (offset 4)
   jumpdest
@@ -42,7 +42,7 @@ mstore
 ;; jump to opcode stub / implementation
   jump
 
-;; each stub should be exactly 4 bytes
+;; each stub should be exactly 6 bytes
 ;; usually jumpdest + opcode + no-ops
 
 ;; 00	STOP
@@ -408,13 +408,14 @@ mstore
   push 0x668
   jump
 
-;; 35 CALLDATALOAD
+;; 35 CALLDATALOAD; TODO: virtualize?
+;; (requires an additional param for calldata which is annoying but essential)
   jumpdest
   calldataload
   push 0x668
   jump
 
-;; 36 CALLDATASIIZE; TODO: fixup
+;; 36 CALLDATASIIZE; TODO: fixup?
   jumpdest
   calldatasize
   push 0x668
@@ -422,20 +423,20 @@ mstore
 
 ;; 37 CALLDATACOPY; TODO: implement...
   jumpdest
-  ;; calldatacopy ;; TODO: restore implementation.. :( will need to init with different code, or use sload or something :\
-  revert
+  ;; TODO: restore implementation.. :( will need to init with different code, or use sload or something :\
+  calldatacopy
   push 0x668
   jump
 
-;; 38 CODESIZE; TODO: jump to impl
+;; 38 CODESIZE; note this is simply implemented as CALLDATASIZE
   jumpdest
-  codesize
+  calldatasize
   push 0x668
   jump
 
-;; 39 CODECOPY; TODO: jump to CODECOPY_impl
+;; 39 CODECOPY; note this is simply implemented as CALLDATACOPY
   jumpdest
-  codecopy
+  calldatacopy
   push 0x668
   jump
 
@@ -457,13 +458,13 @@ mstore
   push 0x668
   jump
 
-;; 3D RETURNDATASIZE; TODO: jump to impl
+;; 3D RETURNDATASIZE
   jumpdest
   returndatasize
   push 0x668
   jump
 
-;; 3E RETURNDATACOPY; TODO: jump to impl
+;; 3E RETURNDATACOPY
   jumpdest
   returndatacopy
   push 0x668
@@ -591,19 +592,19 @@ mstore
   push 0x668
   jump
 
-;; 51 MLOAD
+;; 51 MLOAD (virtual)
   jumpdest
   push 0x644
   jump
   invalid
 
-;; 52 MSTORE
+;; 52 MSTORE (virtual)
   jumpdest
   push 0x64d
   jump
   invalid
 
-;; 53 MSTORE8
+;; 53 MSTORE8 (virtual)
   jumpdest
   push 0x656
   jump
@@ -633,13 +634,13 @@ mstore
   push 0x668
   jump
 
-;; 58 PC
+;; 58 PC; TODO: virtualize
   jumpdest
   pc
   push 0x668
   jump
 
-;; 59 MSIZE
+;; 59 MSIZE (virtual)
   jumpdest
   push 0x65f
   jump
@@ -1079,19 +1080,19 @@ mstore
   push 0x668
   jump
 
-;; A1 LOG1
+;; A1 LOG1; TODO: jump to impl
   jumpdest
   log1
   push 0x668
   jump
 
-;; A2 LOG2
+;; A2 LOG2; TODO: jump to impl
   jumpdest
   log2
   push 0x668
   jump
 
-;; A3 LOG3
+;; A3 LOG3; TODO: jump to impl
   jumpdest
   log3
   push 0x668
@@ -1818,7 +1819,7 @@ mstore
 
 ;; FF SELFDESTRUCT (DO NOT IMPLEMENT (or hook to prevent self-selfdestruct))
   jumpdest
-  invalid
+  stop
   invalid
   invalid
   invalid

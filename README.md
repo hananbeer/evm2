@@ -1,6 +1,6 @@
 # e=vm²
 
-*e=vm²* (pronounced *evm-squared; the = is silent), also spelled *evm2*, is an evm that runs inside evm.
+*e=vm²* (pronounced *evm-squared*; the = is silent), also spelled *evm2*, is an evm that runs inside evm.
 
 ## Yo dawg I heard you like building
 
@@ -23,6 +23,34 @@ Use `evm run` or the provided helper script:
 ### Debugging
 
 `./disas.sh` will compile *evm2* and then show disassembly so, you can like, do things that help stuff.
+
+# TBD
+
+Not yet implemented:
+- CALLDATASIIZE
+- CALLDATACOPY
+- CODESIZE
+- KECCAK256
+- JUMP, JUMPI - IMPORTANT I KNOW... will fix asap
+- SELFDESTRUCT - currently implemented as STOP... (probably should not be implemented at all)
+- CREATE, CREATE2
+
+Implemented without virtualization: (will shift all data 32 bytes)
+- REVERT
+- LOG0, LOG1, LOG2, LOG3, LOG4
+- CALL, STATICCALL, DELEGATECALL, CALLCODE
+- PC
+- RETURNDATASIZE (supposedly ok)
+- RETURNDATACOPY (supposedly ok)
+- RETURN (supposedly ok)
+- GAS (note: can implement HOSTGAS opcode in addition to virtualized GAS but is it useful?)
+- CALLDATASIIZE (this would be CODESIZE of the input code)
+
+### untested
+
+untested but presumably works:
+- CODESIZE (simply replaced to CALLDATASIZE)
+- CODECOPY (simply replaced to CALLDATACOPY)
 
 # Fun fact
 

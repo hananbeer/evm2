@@ -1,0 +1,972 @@
+#define macro MAIN() = takes (0) returns (0) {
+  0x00 msize mstore
+
+start:
+  // load pc2 + 1 (stored in msg.data[0:32])
+  0x00 mload
+  0x01 add
+  
+  // load msg.data.length
+  calldatasize
+
+  // goto label end if (pc2 + 1 > msg.data.length)
+  lt end jumpi
+
+  // pc2 < msg.data.length, continue loop
+
+  // load pc2
+  0x00 mload
+
+  // load bytecode[pc2] by (msg.data[pc2:pc2+32] >> 248)
+  calldataload
+  0xf8 shr
+
+  // stub is at (pc * 6) + stub_offset
+  0x06 mul
+  
+  // add jump-table start offset aka stub_offset
+  stub_start_offset add
+
+  // jump to opcode implementation
+  jump
+  
+stub_start_offset:
+// op_00: // stub_start_offset already defines a jumpdest
+  stop
+  invalid invalid invalid invalid
+
+op_01:
+  add advance_loop jump
+
+op_02:
+  mul advance_loop jump
+
+op_03:
+  sub advance_loop jump
+
+
+
+
+
+
+
+
+
+
+
+op_04:
+  div advance_loop jump
+
+
+op_05:
+  sdiv advance_loop jump
+
+op_06:
+  mod advance_loop jump
+
+op_07:
+  smod advance_loop jump
+
+op_08:
+  addmod advance_loop jump
+
+op_09:
+  mulmod advance_loop jump
+
+op_0a:
+  exp advance_loop jump
+
+op_0b:
+  signextend advance_loop jump
+
+op_0c:
+  invalid invalid invalid invalid invalid
+
+op_0d:
+  invalid invalid invalid invalid invalid
+
+op_0e:
+  invalid invalid invalid invalid invalid
+
+op_0f:
+  invalid invalid invalid invalid invalid
+
+op_10:
+  lt advance_loop jump
+
+op_11:
+  gt advance_loop jump
+
+op_12:
+  slt advance_loop jump
+
+op_13:
+  sgt advance_loop jump
+
+op_14:
+  eq advance_loop jump
+
+op_15:
+  iszero advance_loop jump
+
+op_16:
+  and advance_loop jump
+
+op_17:
+  or advance_loop jump
+
+op_18:
+  xor advance_loop jump
+
+op_19:
+  not advance_loop jump
+
+op_1a:
+  byte advance_loop jump
+
+op_1b:
+  shl advance_loop jump
+
+op_1c:
+  shr advance_loop jump
+
+op_1d:
+  sar advance_loop jump
+
+op_1e:
+  invalid invalid invalid invalid invalid
+
+op_1f:
+  invalid invalid invalid invalid invalid
+
+op_20:
+  invalid
+  // keccak256
+  advance_loop jump
+
+op_21:
+  invalid invalid invalid invalid invalid
+
+op_22:
+  invalid invalid invalid invalid invalid
+
+op_23:
+  invalid invalid invalid invalid invalid
+
+op_24:
+  invalid invalid invalid invalid invalid
+
+op_25:
+  invalid invalid invalid invalid invalid
+
+op_26:
+  invalid invalid invalid invalid invalid
+
+op_27:
+  invalid invalid invalid invalid invalid
+
+op_28:
+  invalid invalid invalid invalid invalid
+
+op_29:
+  invalid invalid invalid invalid invalid
+
+op_2a:
+  invalid invalid invalid invalid invalid
+
+op_2b:
+  invalid invalid invalid invalid invalid
+
+op_2c:
+  invalid invalid invalid invalid invalid
+
+op_2d:
+  invalid invalid invalid invalid invalid
+
+op_2e:
+  invalid invalid invalid invalid invalid
+
+op_2f:
+  invalid invalid invalid invalid invalid
+
+op_30:
+  address advance_loop jump
+
+op_31:
+  balance advance_loop jump
+
+op_32:
+  origin advance_loop jump
+
+op_33:
+  caller advance_loop jump
+
+op_34:
+  callvalue advance_loop jump
+
+op_35:
+  // (requires an additional param for calldata which is annoying but essential)
+  calldataload advance_loop jump
+
+op_36:
+  calldatasize advance_loop jump
+
+op_37:
+  // TODO: restore implementation.. :( will need to init with different code, or use sload or something :\
+  calldatacopy advance_loop jump
+
+op_38:
+  calldatasize advance_loop jump
+
+op_39:
+  calldatacopy advance_loop jump
+
+op_3a:
+  gasprice advance_loop jump
+
+op_3b:
+  extcodesize advance_loop jump
+
+op_3c:
+  extcodecopy advance_loop jump
+
+op_3d:
+  returndatasize advance_loop jump
+
+op_3e:
+  returndatacopy advance_loop jump
+
+op_3f:
+  extcodehash advance_loop jump
+
+op_40:
+  blockhash advance_loop jump
+
+op_41:
+  coinbase advance_loop jump
+
+op_42:
+  timestamp advance_loop jump
+
+op_43:
+  number advance_loop jump
+
+op_44:
+  difficulty advance_loop jump
+
+op_45:
+  gaslimit advance_loop jump
+
+op_46:
+  chainid advance_loop jump
+
+op_47:
+  selfbalance advance_loop jump
+
+op_48:
+  basefee advance_loop jump
+
+op_49:
+  invalid invalid invalid invalid invalid
+
+op_4a:
+  invalid invalid invalid invalid invalid
+
+op_4b:
+  invalid invalid invalid invalid invalid
+
+op_4c:
+  invalid invalid invalid invalid invalid
+
+op_4d:
+  invalid invalid invalid invalid invalid
+
+op_4e:
+  invalid invalid invalid invalid invalid
+
+op_4f:
+  invalid invalid invalid invalid invalid
+
+op_50:
+  pop advance_loop jump
+
+op_51:
+  impl_mload jump
+  invalid
+
+op_52:
+  impl_mstore jump
+  invalid
+
+op_53:
+  impl_mstore8 jump
+  invalid
+
+op_54:
+  sload advance_loop jump
+
+op_55:
+  sstore advance_loop jump
+
+op_56:
+  invalid advance_loop jump
+
+op_57:
+  invalid advance_loop jump
+
+op_58:
+  pc advance_loop jump
+
+op_59:
+  impl_msize jump
+  invalid
+
+op_5a:
+  gas advance_loop jump
+
+op_5b:
+  advance_loop jump
+  invalid // save gas instead of executing jumpdest twice
+
+op_5c:
+  invalid invalid invalid invalid invalid
+
+op_5d:
+  invalid invalid invalid invalid invalid
+
+op_5e:
+  invalid invalid invalid invalid invalid
+
+op_5f:
+  invalid invalid invalid invalid invalid
+
+op_60:
+  impl_push jump
+  invalid
+
+op_61:
+  impl_push jump
+  invalid
+
+op_62:
+  impl_push jump
+  invalid
+
+op_63:
+  impl_push jump
+  invalid
+
+op_64:
+  impl_push jump
+  invalid
+
+op_65:
+  impl_push jump
+  invalid
+
+op_66:
+  impl_push jump
+  invalid
+
+op_67:
+  impl_push jump
+  invalid
+
+op_68:
+  impl_push jump
+  invalid
+
+op_69:
+  impl_push jump
+  invalid
+
+op_6a:
+  impl_push jump
+  invalid
+
+op_6b:
+  impl_push jump
+  invalid
+
+op_6c:
+  impl_push jump
+  invalid
+
+op_6d:
+  impl_push jump
+  invalid
+
+op_6e:
+  impl_push jump
+  invalid
+
+op_6f:
+  impl_push jump
+  invalid
+
+op_70:
+  impl_push jump
+  invalid
+
+op_71:
+  impl_push jump
+  invalid
+
+op_72:
+  impl_push jump
+  invalid
+
+op_73:
+  impl_push jump
+  invalid
+
+op_74:
+  impl_push jump
+  invalid
+
+op_75:
+  impl_push jump
+  invalid
+
+op_76:
+  impl_push jump
+  invalid
+
+op_77:
+  impl_push jump
+  invalid
+
+op_78:
+  impl_push jump
+  invalid
+
+op_79:
+  impl_push jump
+  invalid
+
+op_7a:
+  impl_push jump
+  invalid
+
+op_7b:
+  impl_push jump
+  invalid
+
+op_7c:
+  impl_push jump
+  invalid
+
+op_7d:
+  impl_push jump
+  invalid
+
+op_7e:
+  impl_push jump
+  invalid
+
+op_7f:
+  impl_push jump
+  invalid
+
+op_80:
+  dup1 advance_loop jump
+
+op_81:
+  dup2 advance_loop jump
+
+op_82:
+  dup3 advance_loop jump
+
+op_83:
+  dup4 advance_loop jump
+
+op_84:
+  dup5 advance_loop jump
+
+op_85:
+  dup6 advance_loop jump
+
+op_86:
+  dup7 advance_loop jump
+
+op_87:
+  dup8 advance_loop jump
+
+op_88:
+  dup9 advance_loop jump
+
+op_89:
+  dup10 advance_loop jump
+
+op_8a:
+  dup11 advance_loop jump
+
+op_8b:
+  dup12 advance_loop jump
+
+op_8c:
+  dup13 advance_loop jump
+
+op_8d:
+  dup14 advance_loop jump
+
+op_8e:
+  dup15 advance_loop jump
+
+op_8f:
+  dup16 advance_loop jump
+
+op_90:
+  swap1 advance_loop jump
+
+op_91:
+  swap2 advance_loop jump
+
+op_92:
+  swap3 advance_loop jump
+
+op_93:
+  swap4 advance_loop jump
+
+op_94:
+  swap5 advance_loop jump
+
+op_95:
+  swap6 advance_loop jump
+
+op_96:
+  swap7 advance_loop jump
+
+op_97:
+  swap8 advance_loop jump
+
+op_98:
+  swap9 advance_loop jump
+
+op_99:
+  swap10 advance_loop jump
+
+op_9a:
+  swap11 advance_loop jump
+
+op_9b:
+  swap12 advance_loop jump
+
+op_9c:
+  swap13 advance_loop jump
+
+op_9d:
+  swap14 advance_loop jump
+
+op_9e:
+  swap15 advance_loop jump
+
+op_9f:
+  swap16 advance_loop jump
+
+op_a0:
+  log0 advance_loop jump
+
+op_a1:
+  log1 advance_loop jump
+
+op_a2:
+  log2 advance_loop jump
+
+op_a3:
+  log3 advance_loop jump
+
+op_a4:
+  log4 advance_loop jump
+
+op_a5:
+  invalid invalid invalid invalid invalid
+
+op_a6:
+  invalid invalid invalid invalid invalid
+
+op_a7:
+  invalid invalid invalid invalid invalid
+
+op_a8:
+  invalid invalid invalid invalid invalid
+
+op_a9:
+  invalid invalid invalid invalid invalid
+
+op_aa:
+  invalid invalid invalid invalid invalid
+
+op_ab:
+  invalid invalid invalid invalid invalid
+
+op_ac:
+  invalid invalid invalid invalid invalid
+
+op_ad:
+  invalid invalid invalid invalid invalid
+
+op_ae:
+  invalid invalid invalid invalid invalid
+
+op_af:
+  invalid invalid invalid invalid invalid
+
+op_b0:
+  invalid invalid invalid invalid invalid
+
+op_b1:
+  invalid invalid invalid invalid invalid
+
+op_b2:
+  invalid invalid invalid invalid invalid
+
+op_b3:
+  invalid invalid invalid invalid invalid
+
+op_b4:
+  invalid invalid invalid invalid invalid
+
+op_b5:
+  invalid invalid invalid invalid invalid
+
+op_b6:
+  invalid invalid invalid invalid invalid
+
+op_b7:
+  invalid invalid invalid invalid invalid
+
+op_b8:
+  invalid invalid invalid invalid invalid
+
+op_b9:
+  invalid invalid invalid invalid invalid
+
+op_ba:
+  invalid invalid invalid invalid invalid
+
+op_bb:
+  invalid invalid invalid invalid invalid
+
+op_bc:
+  invalid invalid invalid invalid invalid
+
+op_bd:
+  invalid invalid invalid invalid invalid
+
+op_be:
+  invalid invalid invalid invalid invalid
+
+op_bf:
+  invalid invalid invalid invalid invalid
+
+op_c0:
+  invalid invalid invalid invalid invalid
+
+op_c1:
+  invalid invalid invalid invalid invalid
+
+op_c2:
+  invalid invalid invalid invalid invalid
+
+op_c3:
+  invalid invalid invalid invalid invalid
+
+op_c4:
+  invalid invalid invalid invalid invalid
+
+op_c5:
+  invalid invalid invalid invalid invalid
+
+op_c6:
+  invalid invalid invalid invalid invalid
+
+op_c7:
+  invalid invalid invalid invalid invalid
+
+op_c8:
+  invalid invalid invalid invalid invalid
+
+op_c9:
+  invalid invalid invalid invalid invalid
+
+op_ca:
+  invalid invalid invalid invalid invalid
+
+op_cb:
+  invalid invalid invalid invalid invalid
+
+op_cc:
+  invalid invalid invalid invalid invalid
+
+op_cd:
+  invalid invalid invalid invalid invalid
+
+op_ce:
+  invalid invalid invalid invalid invalid
+
+op_cf:
+  invalid invalid invalid invalid invalid
+
+op_d0:
+  invalid invalid invalid invalid invalid
+
+op_d1:
+  invalid invalid invalid invalid invalid
+
+op_d2:
+  invalid invalid invalid invalid invalid
+
+op_d3:
+  invalid invalid invalid invalid invalid
+
+op_d4:
+  invalid invalid invalid invalid invalid
+
+op_d5:
+  invalid invalid invalid invalid invalid
+
+op_d6:
+  invalid invalid invalid invalid invalid
+
+op_d7:
+  invalid invalid invalid invalid invalid
+
+op_d8:
+  invalid invalid invalid invalid invalid
+
+op_d9:
+  invalid invalid invalid invalid invalid
+
+op_da:
+  invalid invalid invalid invalid invalid
+
+op_db:
+  invalid invalid invalid invalid invalid
+
+op_dc:
+  invalid invalid invalid invalid invalid
+
+op_dd:
+  invalid invalid invalid invalid invalid
+
+op_de:
+  invalid invalid invalid invalid invalid
+
+op_df:
+  invalid invalid invalid invalid invalid
+
+op_e0:
+  invalid invalid invalid invalid invalid
+
+op_e1:
+  invalid invalid invalid invalid invalid
+
+op_e2:
+  invalid invalid invalid invalid invalid
+
+op_e3:
+  invalid invalid invalid invalid invalid
+
+op_e4:
+  invalid invalid invalid invalid invalid
+
+op_e5:
+  invalid invalid invalid invalid invalid
+
+op_e6:
+  invalid invalid invalid invalid invalid
+
+op_e7:
+  invalid invalid invalid invalid invalid
+
+op_e8:
+  invalid invalid invalid invalid invalid
+
+op_e9:
+  invalid invalid invalid invalid invalid
+
+op_ea:
+  invalid invalid invalid invalid invalid
+
+op_eb:
+  invalid invalid invalid invalid invalid
+
+op_ec:
+  invalid invalid invalid invalid invalid
+
+op_ed:
+  invalid invalid invalid invalid invalid
+
+op_ee:
+  invalid invalid invalid invalid invalid
+
+op_ef:
+  invalid invalid invalid invalid invalid
+
+op_f0:
+  invalid
+  // create
+  advance_loop jump
+
+op_f1:
+  call advance_loop jump
+
+op_f2:
+  invalid
+  // callcode
+  advance_loop jump
+
+op_f3:
+  return
+  // advance_loop jump
+  invalid invalid invalid invalid
+
+op_f4:
+  invalid
+  // delegatecall
+  advance_loop jump
+
+op_f5:
+  invalid
+  // create2
+  advance_loop jump
+
+op_f6:
+  invalid invalid invalid invalid invalid
+
+op_f7:
+  invalid invalid invalid invalid invalid
+
+op_f8:
+  invalid invalid invalid invalid invalid
+
+op_f9:
+  invalid invalid invalid invalid invalid
+
+op_fa:
+  invalid
+  // staticcall
+  advance_loop jump
+
+op_fb:
+  invalid invalid invalid invalid invalid
+
+op_fc:
+  invalid invalid invalid invalid invalid
+
+op_fd:
+  revert advance_loop jump
+
+op_fe:
+  invalid invalid invalid invalid invalid
+
+op_ff:
+  stop
+  invalid invalid invalid invalid
+
+
+
+
+impl_mload:
+  // top stack has offset; skip first word (reserved)
+  0x20 add mload
+  advance_loop jump
+
+
+impl_mstore:
+  0x20 add mstore
+  advance_loop jump
+
+
+impl_mstore8:
+  0x20 add mstore8
+  advance_loop jump
+
+
+impl_msize:
+  // top stack has offset; skip first word (reserved)
+  0x20 msize sub
+  advance_loop jump
+
+
+impl_push:
+  // PUSHx implementation:
+  // load pc2
+  0x00 mload
+  // [pc2]
+
+  // for the sub 0x5f later
+  0x5f
+  // [pc2 | 0x5f]
+
+  // dup pc2 to advance it later
+  dup2
+  // [pc2 | 0x5f | pc2]
+
+  // (msg.data[pc2] - 0x5f) << 8 to get number of bytes
+  calldataload
+  0xf8 shr
+  sub
+  // [pc2 | size bytes]
+
+  // dup size to advance pc2 later
+  dup1
+  // [pc2 | size bytes | size bytes]
+
+  // swap1 can be optimized out but kept for sake of code clarity (LOL)
+  0x04
+  swap1
+  shl
+  // [pc2 | size bytes | size bits]
+
+  // 256 - num_bytes
+  0x100 sub
+  // [pc2 | size bytes | 256 - size bits]
+
+  // load pc2 + 1
+  dup3
+  0x01 add
+  // [pc2 | size bytes | 256 - size bits | pc2 + 1]
+
+  // load push data
+  calldataload
+  // [pc2 | size bytes | 256 - size bits | push data bytes32]
+
+  // msg.data[pc2 + 1:pc2 + 1 + 32] >> size_bits
+  swap1
+  shr
+  // [pc2 | size bytes | push data bytesX]
+
+  // advance pc2 by amount of bytes pushed
+  swap2
+  // [push data bytesX | size bytes | pc2]
+  add
+  // [push data bytesX | size bytes + pc2]
+  0x00 mstore
+  // [push data bits]
+  advance_loop jump
+
+
+advance_loop:
+  // jump table exit - advance pc
+  0x00 mload
+  0x01 add
+  0x00 mstore
+
+  // loop back to start
+  start jump
+
+
+end:
+  // push 0x20
+  // dup1
+  // msize
+  // sub
+  // swap1
+  // return
+
+
+  0x20 msize sub
+  0x20 return
+}
