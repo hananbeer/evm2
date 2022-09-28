@@ -52,6 +52,12 @@ untested but presumably works:
 - CODESIZE (simply replaced to CALLDATASIZE)
 - CODECOPY (simply replaced to CALLDATACOPY)
 
+# Huff
+
+Added [huff](https://huff.sh/) implementation:
+
+`run_huff.sh` and `test_huff.sh`
+
 # Fun fact
 
 I used `evm` to write pure bytecode, I couldn't even use labels for jumps I had to calculate offsets!
@@ -60,3 +66,4 @@ Solidity has breaking changes every other day especially when it comes to inline
 So I just ended up implementing from scratch.
 
 Thanks to [The Optimizor](https://twitter.com/0x_Beans/status/1568661118259982336) by [0x_Beans](http://twitter.com/0x_Beans), by the end of which I was building mental models in pure assembly while typing bytecodes from memory.
+
