@@ -1,0 +1,1891 @@
+;; offset 0
+;; start:
+
+  jumpdest
+
+;; load pc2 (stored in msg.data[0:32])
+  push 0
+  mload
+
+;; load msg.data.length
+
+  calldatasize
+  lt
+
+;; goto label end if !(pc2 < msg.data.length)
+  push 0x17
+  jumpi
+
+;; pc2 < msg.data.length
+;; continue loop
+
+;; load pc2
+  push 0
+  mload
+
+;; load bytecode[pc2] by (msg.data[pc2:pc2+32] >> 248)
+  calldataload
+  push 248
+  shr
+
+;; stub is at (pc * 6) + stub_offset
+  push 6
+  mul
+
+;; add jump-table start offset aka stub_offset
+  push 0x17
+  add
+
+;; jump to opcode stub / implementation
+  jump
+
+;; each stub should be exactly 4 bytes
+;; usually jumpdest + opcode + no-ops
+
+;; 00	STOP
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 01	ADD
+  jumpdest
+  add
+  push 0x633
+  jump
+
+;; 02	MUL
+  jumpdest
+  mul
+  push 0x633
+  jump
+
+;; 03	SUB
+  jumpdest
+  sub
+  push 0x633
+  jump
+
+;; 04	DIV
+  jumpdest
+  div
+  push 0x633
+  jump
+
+;; 05 SDIV
+  jumpdest
+  sdiv
+  push 0x633
+  jump
+
+;; 06 MOD
+  jumpdest
+  mod
+  push 0x633
+  jump
+
+;; 07 SMOD
+  jumpdest
+  smod
+  push 0x633
+  jump
+
+;; 08 ADDMOD
+  jumpdest
+  addmod
+  push 0x633
+  jump
+
+;; 09 MULMOD
+  jumpdest
+  mulmod
+  push 0x633
+  jump
+
+;; 0A EXP
+  jumpdest
+  exp
+  push 0x633
+  jump
+
+;; 0B SIGNEXTEND
+  jumpdest
+  signextend
+  push 0x633
+  jump
+
+;; 0c
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 0d
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 0e
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 0f
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 10 LT
+  jumpdest
+  lt
+  push 0x633
+  jump
+
+;; 11 GT
+  jumpdest
+  gt
+  push 0x633
+  jump
+
+;; 12 SLT
+  jumpdest
+  slt
+  push 0x633
+  jump
+
+;; 13 SGT
+  jumpdest
+  sgt
+  push 0x633
+  jump
+
+;; 14 EQ
+  jumpdest
+  eq
+  push 0x633
+  jump
+
+;; 15 ISZERO
+  jumpdest
+  iszero
+  push 0x633
+  jump
+
+;; 16 AND
+  jumpdest
+  and
+  push 0x633
+  jump
+
+;; 17 OR
+  jumpdest
+  or
+  push 0x633
+  jump
+
+;; 18 XOR
+  jumpdest
+  xor
+  push 0x633
+  jump
+
+;; 19 NOT
+  jumpdest
+  not
+  push 0x633
+  jump
+
+;; 1A BYTE
+  jumpdest
+  byte
+  push 0x633
+  jump
+
+;; 1B SHL
+  jumpdest
+  shl
+  push 0x633
+  jump
+
+;; 1C SHR
+  jumpdest
+  shr
+  push 0x633
+  jump
+
+;; 1D SAR
+  jumpdest
+  sar
+  push 0x633
+  jump
+
+;; 1e
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 1f
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; TODO: implement
+;; 20 KECCAK256
+  jumpdest
+  keccak256
+  push 0x633
+  jump
+
+;; 21
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 22
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 23
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 24
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 25
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 26
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 27
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 28
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 29
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 2a
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 2b
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 2c
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 2d
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 2e
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 2f
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 30 ADDRESS
+  jumpdest
+  address
+  push 0x633
+  jump
+
+;; 31 BALANCE
+  jumpdest
+  balance
+  push 0x633
+  jump
+
+;; ORIGIN
+  jumpdest
+  origin
+  push 0x633
+  jump
+
+;; CALLER
+  jumpdest
+  caller
+  push 0x633
+  jump
+
+;; 34 CALLVALUE
+  jumpdest
+  callvalue
+  push 0x633
+  jump
+
+;; 35 CALLDATALOAD
+  jumpdest
+  calldataload
+  push 0x633
+  jump
+
+;; 36 CALLDATASIIZE
+  jumpdest
+  calldatasize
+  push 0x633
+  jump
+
+;; 37 CALLDATACOPY
+  jumpdest
+  calldatacopy
+  push 0x633
+  jump
+
+;; 38 CODESIZE
+  jumpdest
+  codesize
+  push 0x633
+  jump
+
+;; 39
+  jumpdest
+  codecopy
+  push 0x633
+  jump
+
+;; 3A GASPRICE
+  jumpdest
+  gasprice
+  push 0x633
+  jump
+
+;; 3B EXTCODESIZE
+  jumpdest
+  extcodesize
+  push 0x633
+  jump
+
+;; 3C EXTCODECOPY
+  jumpdest
+  extcodecopy
+  push 0x633
+  jump
+
+;; 3D RETURNDATASIZE
+  jumpdest
+  returndatasize
+  push 0x633
+  jump
+
+;; 3E RETURNDATACOPY
+  jumpdest
+  returndatacopy
+  push 0x633
+  jump
+
+;; 3F EXTCODEHASH
+  jumpdest
+  extcodehash
+  push 0x633
+  jump
+
+;; 40 BLOCKHASH
+  jumpdest
+  blockhash
+  push 0x633
+  jump
+
+;; 41 COINBASE
+  jumpdest
+  coinbase
+  push 0x633
+  jump
+
+;; 42 TIMESTAMP
+  jumpdest
+  timestamp
+  push 0x633
+  jump
+
+;; 43 NUMBER
+  jumpdest
+  number
+  push 0x633
+  jump
+
+;; 44 DIFFICULTY / PREVRANDAO
+  jumpdest
+  difficulty
+  push 0x633
+  jump
+
+;; 45 GASLIMIT
+  jumpdest
+  gaslimit
+  push 0x633
+  jump
+
+;; 46 CHAINID
+  jumpdest
+  chainid
+  push 0x633
+  jump
+
+;; 47 SELFBALANCE
+  jumpdest
+  selfbalance
+  push 0x633
+  jump
+
+;; 48 BASEFEE
+  jumpdest
+  basefee
+  push 0x633
+  jump
+
+;; 49
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 4a
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 4b
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 4c
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 4d
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 4e
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 4f
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 50
+  jumpdest
+  pop
+  push 0x633
+  jump
+
+;; 51
+  jumpdest
+  mload
+  push 0x633
+  jump
+
+;; 52
+  jumpdest
+  mstore
+  push 0x633
+  jump
+
+;; 53
+  jumpdest
+  mstore8
+  push 0x633
+  jump
+
+;; 54
+  jumpdest
+  sload
+  push 0x633
+  jump
+
+;; 55
+  jumpdest
+  sstore
+  push 0x633
+  jump
+
+;; 56 JUMP ;; TODO: implement JUMP
+  jumpdest
+  stop
+  push 0x633
+  jump
+
+;; 57 JUMPI;; TODO: implement JUMPI
+  jumpdest
+  stop
+  push 0x633
+  jump
+
+;; 58
+  jumpdest
+  pc
+  push 0x633
+  jump
+
+;; 59
+  jumpdest
+  msize
+  push 0x633
+  jump
+
+;; 5A gas
+  jumpdest
+  gas
+  push 0x633
+  jump
+
+;; 5B JUMPDEST (save gas instead of executing jumpdest twice)
+  jumpdest
+  push 0x633
+  jump
+  stop
+
+;; 5c
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 5d
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 5e
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 5f
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 60 PUSH1
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; 61 PUSH2
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push3:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push4:
+  jumpdest
+  push 0x607
+  jump
+
+;; op_push5:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push6:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push7:
+  jumpdest
+  push 0x607
+  jump
+
+;; op_push8:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push9:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push10:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push11:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push12:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push13:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push14:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push15:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push16:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push17:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push18:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push19:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push20:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push21:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push22:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push23:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push24:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push25:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push26:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push27:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push28:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push29:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push30:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push31:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; op_push32:
+  jumpdest
+  push 0x607
+  jump
+  stop
+
+;; 0x80
+
+;; 80 DUP1
+  jumpdest
+  dup1
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup2
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup3
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup4
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup5
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup6
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup7
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup8
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup9
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup10
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup11
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup12
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup13
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup14
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup15
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  dup16
+  push 0x633
+  jump
+
+;; 0x90
+
+;; placeholder:
+  jumpdest
+  swap1
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap2
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap3
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap4
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap5
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap6
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap7
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap8
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap9
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap10
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap11
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap12
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap13
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap14
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap15
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  swap16
+  push 0x633
+  jump
+
+;; 0xa0
+
+;; placeholder:
+  jumpdest
+  log0
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  log1
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  log2
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  log3
+  push 0x633
+  jump
+
+;; placeholder:
+  jumpdest
+  log4
+  push 0x633
+  jump
+
+;; a5
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; a6
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; a7
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; a8
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; a9
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; aa
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ab
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ac
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ad
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ae
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; af
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+
+
+
+
+;; 0xb0
+
+;; b0
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b1
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b2
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b3
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b4
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b5
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b6
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b7
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b8
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; b9
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ba
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; bb
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; bc
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; bd
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; be
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; bf
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+
+
+
+
+;; 0xc0
+
+;; c0
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c1
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c2
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c3
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c4
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c5
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c6
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c7
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c8
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; c9
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ca
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; cb
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; cc
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; cd
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ce
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; cf
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 0xd0
+
+;; d0
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; d1
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; df
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; e0
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; e1
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; 
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; ef
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; F0 CREATE
+  jumpdest
+  create
+  push 0x633
+  jump
+
+;; F1
+  jumpdest
+  call
+  push 0x633
+  jump
+
+;; F2 CALLCODE
+  jumpdest
+  callcode
+  push 0x633
+  jump
+
+;; F3 RETURN; TODO: should hook?
+  jumpdest
+  return
+  push 0x633
+  jump
+
+;; F4 DELEGATECALL
+  jumpdest
+  delegatecall
+  push 0x633
+  jump
+
+;; F5 CREATE2
+  jumpdest
+  create2
+  push 0x633
+  jump
+
+;; f6
+  jumpdest
+  
+  push 0x633
+  jump
+
+;; f7
+  jumpdest
+  
+  push 0x633
+  jump
+
+;; f8
+  jumpdest
+  
+  push 0x633
+  jump
+
+;; f9
+  jumpdest
+  
+  push 0x633
+  jump
+
+;; FA STATICCALL
+  jumpdest
+  staticcall
+  push 0x633
+  jump
+
+;; fb
+  jumpdest
+  
+  push 0x633
+  jump
+
+;; fc
+  jumpdest
+  
+  push 0x633
+  jump
+
+;; FD REVERT; TODO: hook?
+  jumpdest
+  revert
+  push 0x633
+  jump
+
+;; FE INVALID
+  jumpdest
+  invalid
+  stop
+  stop
+  stop
+  stop
+
+;; FF SELFDESTRUCT (DO NOT IMPLEMENT (or hook to prevent self-selfdestruct))
+  jumpdest
+  stop
+  stop
+  stop
+  stop
+  stop
+
+;; implementation where 4 byte stubs wasn't enough
+
+;; op_push_impl:
+  jumpdest
+
+  ;; for the sub 0x5f later
+  push 0x5f
+
+  ;; load pc2
+  push 0
+  mload
+
+  ;; (msg.data[pc2] - 0x5f) << 8 to get number of bytes
+  calldataload
+  push 248
+  shr
+  sub
+
+  ;; top of stack contains (0x6X - 0x5f) ie. number of bytes; advance pc2 by this amount
+  ;; (only the bytes data; +1 pc for the opcode will be added later)
+  dup1
+  push 0
+  mload
+  add
+  push 0
+  mstore
+
+  push 4
+  swap1
+  shl
+
+  ;; 256 - num_bytes
+  push 256
+  sub
+
+  push 0
+  mload
+  push 1
+  add
+  calldataload
+  swap1
+  shr
+
+;; advance pc
+  jumpdest
+  push 0
+  mload
+  push 1
+  add
+  push 0
+  mstore
+
+;; jump back up
+  push 0
+  jump
+
+;; next:
+  ;; push pc2
+  ;; add
+
+
+;; error
+
+  stop
+  stop
+
+;; end of bytecode
+  jumpdest
+  stop
+  stop
+  stop
+
