@@ -1,23 +1,26 @@
-;; offset 0
-;; start:
+;; init memory
+push 0
+msize
+mstore
 
+;; start loop (offset 4)
   jumpdest
 
-;; load pc2 (stored in msg.data[0:32])
+;; load pc2 + 1 (stored in msg.data[0:32])
   push 0
   mload
+  push 1
+  add
 
 ;; load msg.data.length
-
   calldatasize
-  lt
 
-;; goto label end if !(pc2 < msg.data.length)
-  push 0x17
+;; goto label end if (pc2 + 1 > msg.data.length)
+  lt
+  push 0x675
   jumpi
 
-;; pc2 < msg.data.length
-;; continue loop
+;; pc2 < msg.data.length, continue loop
 
 ;; load pc2
   push 0
@@ -33,7 +36,7 @@
   mul
 
 ;; add jump-table start offset aka stub_offset
-  push 0x17
+  push 0x1f
   add
 
 ;; jump to opcode stub / implementation
@@ -45,1821 +48,1885 @@
 ;; 00	STOP
   jumpdest
   stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; 01	ADD
   jumpdest
   add
-  push 0x633
+  push 0x668
   jump
 
 ;; 02	MUL
   jumpdest
   mul
-  push 0x633
+  push 0x668
   jump
 
 ;; 03	SUB
   jumpdest
   sub
-  push 0x633
+  push 0x668
   jump
 
 ;; 04	DIV
   jumpdest
   div
-  push 0x633
+  push 0x668
   jump
 
 ;; 05 SDIV
   jumpdest
   sdiv
-  push 0x633
+  push 0x668
   jump
 
 ;; 06 MOD
   jumpdest
   mod
-  push 0x633
+  push 0x668
   jump
 
 ;; 07 SMOD
   jumpdest
   smod
-  push 0x633
+  push 0x668
   jump
 
 ;; 08 ADDMOD
   jumpdest
   addmod
-  push 0x633
+  push 0x668
   jump
 
 ;; 09 MULMOD
   jumpdest
   mulmod
-  push 0x633
+  push 0x668
   jump
 
 ;; 0A EXP
   jumpdest
   exp
-  push 0x633
+  push 0x668
   jump
 
 ;; 0B SIGNEXTEND
   jumpdest
   signextend
-  push 0x633
+  push 0x668
   jump
 
-;; 0c
+;; 0c invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 0d
+;; 0d invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 0e
+;; 0e invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 0f
+;; 0f invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; 10 LT
   jumpdest
   lt
-  push 0x633
+  push 0x668
   jump
 
 ;; 11 GT
   jumpdest
   gt
-  push 0x633
+  push 0x668
   jump
 
 ;; 12 SLT
   jumpdest
   slt
-  push 0x633
+  push 0x668
   jump
 
 ;; 13 SGT
   jumpdest
   sgt
-  push 0x633
+  push 0x668
   jump
 
 ;; 14 EQ
   jumpdest
   eq
-  push 0x633
+  push 0x668
   jump
 
 ;; 15 ISZERO
   jumpdest
   iszero
-  push 0x633
+  push 0x668
   jump
 
 ;; 16 AND
   jumpdest
   and
-  push 0x633
+  push 0x668
   jump
 
 ;; 17 OR
   jumpdest
   or
-  push 0x633
+  push 0x668
   jump
 
 ;; 18 XOR
   jumpdest
   xor
-  push 0x633
+  push 0x668
   jump
 
 ;; 19 NOT
   jumpdest
   not
-  push 0x633
+  push 0x668
   jump
 
 ;; 1A BYTE
   jumpdest
   byte
-  push 0x633
+  push 0x668
   jump
 
 ;; 1B SHL
   jumpdest
   shl
-  push 0x633
+  push 0x668
   jump
 
 ;; 1C SHR
   jumpdest
   shr
-  push 0x633
+  push 0x668
   jump
 
 ;; 1D SAR
   jumpdest
   sar
-  push 0x633
+  push 0x668
   jump
 
-;; 1e
+;; 1e invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 1f
+;; 1f invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; TODO: implement
-;; 20 KECCAK256
+;; 20 KECCAK256; TODO: jump to impl
   jumpdest
-  keccak256
-  push 0x633
+  ;; keccak256
+  invalid
+  push 0x668
   jump
 
-;; 21
+;; 21 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 22
+;; 22 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 23
+;; 23 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 24
+;; 24 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 25
+;; 25 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 26
+;; 26 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 27
+;; 27 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 28
+;; 28 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 29
+;; 29 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 2a
+;; 2a invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 2b
+;; 2b invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 2c
+;; 2c invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 2d
+;; 2d invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 2e
+;; 2e invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 2f
+;; 2f invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; 30 ADDRESS
   jumpdest
   address
-  push 0x633
+  push 0x668
   jump
 
 ;; 31 BALANCE
   jumpdest
   balance
-  push 0x633
+  push 0x668
   jump
 
-;; ORIGIN
+;; 32 ORIGIN
   jumpdest
   origin
-  push 0x633
+  push 0x668
   jump
 
-;; CALLER
+;; 33 CALLER
   jumpdest
   caller
-  push 0x633
+  push 0x668
   jump
 
 ;; 34 CALLVALUE
   jumpdest
   callvalue
-  push 0x633
+  push 0x668
   jump
 
 ;; 35 CALLDATALOAD
   jumpdest
   calldataload
-  push 0x633
+  push 0x668
   jump
 
-;; 36 CALLDATASIIZE
+;; 36 CALLDATASIIZE; TODO: fixup
   jumpdest
   calldatasize
-  push 0x633
+  push 0x668
   jump
 
-;; 37 CALLDATACOPY
+;; 37 CALLDATACOPY; TODO: implement...
   jumpdest
-  calldatacopy
-  push 0x633
+  ;; calldatacopy ;; TODO: restore implementation.. :( will need to init with different code, or use sload or something :\
+  revert
+  push 0x668
   jump
 
-;; 38 CODESIZE
+;; 38 CODESIZE; TODO: jump to impl
   jumpdest
   codesize
-  push 0x633
+  push 0x668
   jump
 
-;; 39
+;; 39 CODECOPY; TODO: jump to CODECOPY_impl
   jumpdest
   codecopy
-  push 0x633
+  push 0x668
   jump
 
 ;; 3A GASPRICE
   jumpdest
   gasprice
-  push 0x633
+  push 0x668
   jump
 
 ;; 3B EXTCODESIZE
   jumpdest
   extcodesize
-  push 0x633
+  push 0x668
   jump
 
 ;; 3C EXTCODECOPY
   jumpdest
   extcodecopy
-  push 0x633
+  push 0x668
   jump
 
-;; 3D RETURNDATASIZE
+;; 3D RETURNDATASIZE; TODO: jump to impl
   jumpdest
   returndatasize
-  push 0x633
+  push 0x668
   jump
 
-;; 3E RETURNDATACOPY
+;; 3E RETURNDATACOPY; TODO: jump to impl
   jumpdest
   returndatacopy
-  push 0x633
+  push 0x668
   jump
 
 ;; 3F EXTCODEHASH
   jumpdest
   extcodehash
-  push 0x633
+  push 0x668
   jump
 
 ;; 40 BLOCKHASH
   jumpdest
   blockhash
-  push 0x633
+  push 0x668
   jump
 
 ;; 41 COINBASE
   jumpdest
   coinbase
-  push 0x633
+  push 0x668
   jump
 
 ;; 42 TIMESTAMP
   jumpdest
   timestamp
-  push 0x633
+  push 0x668
   jump
 
 ;; 43 NUMBER
   jumpdest
   number
-  push 0x633
+  push 0x668
   jump
 
 ;; 44 DIFFICULTY / PREVRANDAO
   jumpdest
   difficulty
-  push 0x633
+  push 0x668
   jump
 
 ;; 45 GASLIMIT
   jumpdest
   gaslimit
-  push 0x633
+  push 0x668
   jump
 
 ;; 46 CHAINID
   jumpdest
   chainid
-  push 0x633
+  push 0x668
   jump
 
 ;; 47 SELFBALANCE
   jumpdest
   selfbalance
-  push 0x633
+  push 0x668
   jump
 
 ;; 48 BASEFEE
   jumpdest
   basefee
-  push 0x633
+  push 0x668
   jump
 
-;; 49
+;; 49 invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 4a
+;; 4a invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 4b
+;; 4b invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 4c
+;; 4c invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 4d
+;; 4d invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 4e
+;; 4e invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 4f
+;; 4f invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 50
+;; 50 POP
   jumpdest
   pop
-  push 0x633
+  push 0x668
   jump
 
-;; 51
+;; 51 MLOAD
   jumpdest
-  mload
-  push 0x633
+  push 0x644
   jump
+  invalid
 
-;; 52
+;; 52 MSTORE
   jumpdest
-  mstore
-  push 0x633
+  push 0x64d
   jump
+  invalid
 
-;; 53
+;; 53 MSTORE8
   jumpdest
-  mstore8
-  push 0x633
+  push 0x656
   jump
+  invalid
 
-;; 54
+;; 54 SLOAD
   jumpdest
   sload
-  push 0x633
+  push 0x668
   jump
 
-;; 55
+;; 55 SSTORE
   jumpdest
   sstore
-  push 0x633
+  push 0x668
   jump
 
 ;; 56 JUMP ;; TODO: implement JUMP
   jumpdest
-  stop
-  push 0x633
+  invalid
+  push 0x668
   jump
 
 ;; 57 JUMPI;; TODO: implement JUMPI
   jumpdest
-  stop
-  push 0x633
+  invalid
+  push 0x668
   jump
 
-;; 58
+;; 58 PC
   jumpdest
   pc
-  push 0x633
+  push 0x668
   jump
 
-;; 59
+;; 59 MSIZE
   jumpdest
-  msize
-  push 0x633
+  push 0x65f
   jump
+  invalid
 
-;; 5A gas
+;; 5A GAS
   jumpdest
   gas
-  push 0x633
+  push 0x668
   jump
 
-;; 5B JUMPDEST (save gas instead of executing jumpdest twice)
+;; 5B JUMPDEST
   jumpdest
-  push 0x633
+  push 0x668
   jump
-  stop
+  invalid ;; save gas instead of executing jumpdest twice
 
-;; 5c
+;; 5c invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 5d
+;; 5d invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 5e
+;; 5e invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 5f
+;; 5f invalid
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; 60 PUSH1
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
 ;; 61 PUSH2
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push3:
+;; 62 PUSH3
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push4:
+;; 63 PUSH4
   jumpdest
-  push 0x607
+  push 0x61f
   jump
+  invalid
 
-;; op_push5:
+;; 64 PUSH5
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push6:
+;; 65 PUSH6
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push7:
+;; 66 PUSH7
   jumpdest
-  push 0x607
+  push 0x61f
   jump
+  invalid
 
-;; op_push8:
+;; 67 PUSH8
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push9:
+;; 68 PUSH9
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push10:
+;; 69 PUSH10
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push11:
+;; 6A PUSH11
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push12:
+;; 6B PUSH12
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push13:
+;; 6C PUSH13
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push14:
+;; 6D PUSH14
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push15:
+;; 6E PUSH15
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push16:
+;; 6F PUSH16
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push17:
+;; 70 PUSH17
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push18:
+;; 71 PUSH18
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push19:
+;; 72 PUSH19
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push20:
+;; 73 PUSH20
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push21:
+;; 74 PUSH21
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push22:
+;; 75 PUSH22
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push23:
+;; 76 PUSH23
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push24:
+;; 77 PUSH24
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push25:
+;; 78 PUSH25
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push26:
+;; 79 PUSH26
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push27:
+;; 7A PUSH27
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push28:
+;; 7B PUSH28
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push29:
+;; 7C PUSH29
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push30:
+;; 7D PUSH30
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push31:
+;; 7E PUSH31
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
+  invalid
 
-;; op_push32:
+;; 7F PUSH32
   jumpdest
-  push 0x607
+  push 0x61f
   jump
-  stop
-
-;; 0x80
+  invalid
 
 ;; 80 DUP1
   jumpdest
   dup1
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 81 DUP2
   jumpdest
   dup2
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 82 DUP3
   jumpdest
   dup3
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 83 DUP4
   jumpdest
   dup4
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 84 DUP5
   jumpdest
   dup5
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 85 DUP6
   jumpdest
   dup6
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 86 DUP7
   jumpdest
   dup7
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 87 DUP8
   jumpdest
   dup8
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 88 DUP9
   jumpdest
   dup9
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 89 DUP10
   jumpdest
   dup10
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 8A DUP11
   jumpdest
   dup11
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 8B DUP12
   jumpdest
   dup12
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 8C DUP13
   jumpdest
   dup13
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 8D DUP14
   jumpdest
   dup14
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 8E DUP15
   jumpdest
   dup15
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 8F DUP16
   jumpdest
   dup16
-  push 0x633
+  push 0x668
   jump
 
-;; 0x90
-
-;; placeholder:
+;; 90 SWAP1
   jumpdest
   swap1
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 91 SWAP2
   jumpdest
   swap2
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 92 SWAP3
   jumpdest
   swap3
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 93 SWAP4
   jumpdest
   swap4
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 94 SWAP5
   jumpdest
   swap5
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 95 SWAP6
   jumpdest
   swap6
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 96 SWAP7
   jumpdest
   swap7
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 97 SWAP8
   jumpdest
   swap8
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 98 SWAP9
   jumpdest
   swap9
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 99 SWAP10
   jumpdest
   swap10
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 9A SWAP11
   jumpdest
   swap11
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 9B SWAP12
   jumpdest
   swap12
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 9C SWAP13
   jumpdest
   swap13
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 9D SWAP14
   jumpdest
   swap14
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 9E SWAP15
   jumpdest
   swap15
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; 9F SWAP16
   jumpdest
   swap16
-  push 0x633
+  push 0x668
   jump
 
-;; 0xa0
-
-;; placeholder:
+;; A0 LOG0; TODO: jump to impl
   jumpdest
   log0
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; A1 LOG1
   jumpdest
   log1
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; A2 LOG2
   jumpdest
   log2
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; A3 LOG3
   jumpdest
   log3
-  push 0x633
+  push 0x668
   jump
 
-;; placeholder:
+;; A4 LOG4; TODO: jump to impl
   jumpdest
   log4
-  push 0x633
+  push 0x668
   jump
 
-;; a5
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; a6
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; a7
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; a8
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; a9
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; aa
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; ab
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; ac
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; ad
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; ae
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; af
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-
-
+;; a5 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
+;; a6 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 0xb0
+;; a7 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; b0
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b1
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b2
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b3
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b4
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b5
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b6
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b7
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b8
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; b9
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
-
-;; ba
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; a8 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; bb
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; a9 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; bc
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; aa invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; bd
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; ab invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; be
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; ac invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; bf
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; ad invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
+;; ae invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
+;; af invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
+;; b0 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
+;; b1 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 0xc0
+;; b2 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c0
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b3 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c1
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b4 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c2
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b5 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c3
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b6 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c4
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b7 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c5
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b8 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c6
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; b9 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c7
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; ba invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c8
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; bb invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; c9
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; bc invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; ca
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; bd invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; cb
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; be invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; cc
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; bf invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; cd
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c0 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; ce
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c1 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; cf
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c2 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 0xd0
+;; c3 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; d0
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c4 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; d1
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c5 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c6 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c7 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c8 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; c9 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; ca invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; cb invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; cc invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; cd invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; ce invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; cf invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d0 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d1 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d2 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; df
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d3 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; e0
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d4 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; e1
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d5 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d6 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d7 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d8 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; d9 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; da invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; db invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; dc invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; dd invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; de invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; df invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; e0 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; e1 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; 
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; e2 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; ef
-  jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+;; e3 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; F0 CREATE
-  jumpdest
-  create
-  push 0x633
+;; e4 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; e5 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; e6 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; e7 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; e8 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; e9 invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; ea invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; eb invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; ec invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; ed invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; ee invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; ef invalid
+  jumpdest
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; F0 CREATE; TODO: jump to impl
+  jumpdest
+  ;; create
+  invalid
+  push 0x668
   jump
 
-;; F1
+;; F1 CALL; TODO: jump to impl
   jumpdest
   call
-  push 0x633
+  push 0x668
   jump
 
-;; F2 CALLCODE
+;; F2 CALLCODE; TODO: jump to impl
   jumpdest
-  callcode
-  push 0x633
+  ;; callcode
+  invalid
+  push 0x668
   jump
 
 ;; F3 RETURN; TODO: should hook?
   jumpdest
   return
-  push 0x633
+  ;; push 0x668
+  ;; jump
+  invalid
+  invalid
+  invalid
+  invalid
+
+;; F4 DELEGATECALL; TODO: jump to impl
+  jumpdest
+  ;; delegatecall
+  invalid
+  push 0x668
   jump
 
-;; F4 DELEGATECALL
+;; F5 CREATE2; TODO: jump to impl
   jumpdest
-  delegatecall
-  push 0x633
+  ;; create2
+  invalid
+  push 0x668
   jump
 
-;; F5 CREATE2
+;; f6 invalid
   jumpdest
-  create2
-  push 0x633
-  jump
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; f6
+;; f7 invalid
   jumpdest
-  
-  push 0x633
-  jump
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; f7
+;; f8 invalid
   jumpdest
-  
-  push 0x633
-  jump
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; f8
+;; f9 invalid
   jumpdest
-  
-  push 0x633
-  jump
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; f9
+;; FA STATICCALL; TODO: jump to impl
   jumpdest
-  
-  push 0x633
-  jump
-
-;; FA STATICCALL
-  jumpdest
-  staticcall
-  push 0x633
+  ;; staticcall
+  invalid
+  push 0x668
   jump
 
 ;; fb
   jumpdest
-  
-  push 0x633
-  jump
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; fc
   jumpdest
-  
-  push 0x633
-  jump
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; FD REVERT; TODO: hook?
   jumpdest
   revert
-  push 0x633
+  push 0x668
   jump
 
 ;; FE INVALID
   jumpdest
   invalid
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
 
 ;; FF SELFDESTRUCT (DO NOT IMPLEMENT (or hook to prevent self-selfdestruct))
   jumpdest
-  stop
-  stop
-  stop
-  stop
-  stop
+  invalid
+  invalid
+  invalid
+  invalid
+  invalid
 
-;; implementation where 4 byte stubs wasn't enough
+;; stub implementations where 6-byte stubs were not enough
 
-;; op_push_impl:
+;; PUSHx implementation:
   jumpdest
-
-  ;; for the sub 0x5f later
-  push 0x5f
 
   ;; load pc2
   push 0
   mload
+  ;; [pc2]
+
+  ;; for the sub 0x5f later
+  push 0x5f
+  ;; [pc2 | 0x5f]
+
+  ;; dup pc2 to advance it later
+  dup2
+  ;; [pc2 | 0x5f | pc2]
 
   ;; (msg.data[pc2] - 0x5f) << 8 to get number of bytes
   calldataload
   push 248
   shr
   sub
+  ;; [pc2 | size bytes]
 
-  ;; top of stack contains (0x6X - 0x5f) ie. number of bytes; advance pc2 by this amount
-  ;; (only the bytes data; +1 pc for the opcode will be added later)
+  ;; dup size to advance pc2 later
   dup1
-  push 0
-  mload
-  add
-  push 0
-  mstore
+  ;; [pc2 | size bytes | size bytes]
 
+  ;; swap1 can be optimized out but kept for sake of code clarity (LOL)
   push 4
   swap1
   shl
+  ;; [pc2 | size bytes | size bits]
 
   ;; 256 - num_bytes
   push 256
   sub
+  ;; [pc2 | size bytes | 256 - size bits]
 
-  push 0
-  mload
+  ;; load pc2 + 1
+  dup3
   push 1
   add
+  ;; [pc2 | size bytes | 256 - size bits | pc2 + 1]
+
+  ;; load push data
   calldataload
+  ;; [pc2 | size bytes | 256 - size bits | push data bytes32]
+
+  ;; msg.data[pc2 + 1:pc2 + 1 + 32] >> size_bits
   swap1
   shr
+  ;; [pc2 | size bytes | push data bytesX]
 
+  ;; advance pc2 by amount of bytes pushed
+  swap2
+  ;; [push data bytesX | size bytes | pc2]
+  add
+  ;; [push data bytesX | size bytes + pc2]
+  push 0
+  mstore
+  ;; [push data bits]
+  push 0x668
+  jump
+
+;; MLOAD hook (offset 0x644)
+;; top stack has offset; skip first word (reserved)
+  jumpdest
+  push 32
+  add
+  mload
+  push 0x668
+  jump
+
+;; MSTORE hook (offset 0x64d)
+;; top stack has value, second is offset; skip first word (reserved)
+  jumpdest
+  push 32
+  add
+  mstore
+  push 0x668
+  jump
+
+;; MSTORE8 hook (offset 0x656)
+;; top stack has value, second is offset; skip first word (reserved)
+  jumpdest
+  push 32
+  add
+  mstore8
+  push 0x668
+  jump
+
+;; MSIZE hook (offset 0x65f)
+;; top stack has offset; skip first word (reserved)
+  jumpdest
+  push 32
+  msize
+  sub
+  push 0x668
+  jump
+
+;; jump table exit (offset 0x668)
 ;; advance pc
   jumpdest
   push 0
@@ -1869,23 +1936,16 @@
   push 0
   mstore
 
-;; jump back up
-  push 0
+;; loop back to start
+  push 4
   jump
 
-;; next:
-  ;; push pc2
-  ;; add
-
-
-;; error
-
-  stop
-  stop
-
-;; end of bytecode
+;; end of bytecode (offset 0x675)
   jumpdest
-  stop
-  stop
-  stop
+  push 0x20
+  dup1
+  msize
+  sub
+  swap1
+  return
 
